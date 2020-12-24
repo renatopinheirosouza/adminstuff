@@ -12,8 +12,8 @@
     .\auditlog.ps1 -startDate 11/01/2020 -endDate 11/30/2020 -logfile auditlogs.json -loginaccount some.user@somedomain.com
 
 Author	: Renato Pinheiro de Souza
-Version : v0.2
-Date	: 23/12/2020
+Version : v0.3
+Date	: 24/12/2020
 #>
 
 param(
