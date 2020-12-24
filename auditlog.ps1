@@ -1,18 +1,18 @@
 <#
-.Purpose
-     Collect Office 365 audit logs
+.Objective
+     Collect Office 365 audit logs, saving them in a json file
 
-.INPUTS
+.Parameters
     startDate: Audit log initial date
     endDate: Audit log end date
-    logFile: Audit log file path
-    loginAccount: Office 365 login account
+    logFile: Name of the json file where the audit logs are going to be save
+    loginAccount: Office 365 login account used to access the admin area
 
-.Utilization Samples
-    .\auditlog.ps1 -startDate 11/01/2020 -endDate 11/30/2020 -logfile teste.log -loginaccount adm.renato.pinheiro@bridgeconsulting.com.br
+.Utilization sample
+    .\auditlog.ps1 -startDate 11/01/2020 -endDate 11/30/2020 -logfile auditlogs.json -loginaccount some.user@somedomain.com
 
-Author		: Renato Souza (renato.pinheiro@bridgeconsulting.com.br)
-Version : v0.1
+Author	: Renato Pinheiro de Souza
+Version : v0.2
 Date	: 23/12/2020
 #>
 
@@ -23,6 +23,7 @@ param(
     [Parameter(Mandatory=$true)][String]$loginAccount
     )
 
+# Converting to date format
 [datetime]$startDate = $startDate
 [datetime]$endDate = $endDate
 
@@ -47,7 +48,7 @@ foreach ($user in $users) {
     # Screen cleanning
     cls
 
-    # Showing perido and progress
+    # Showing audit log collect period and progress
     $percentual = [math]::round((($counter / $users.Length) * 100),2) 
     Write-Host "Collecting audit logs from " $startDate " to " $endDate
     Write-Host "Completed " $percentual " %"
@@ -55,7 +56,7 @@ foreach ($user in $users) {
     # Getting individual user
     $user = "" + $user
     $user = $user.Substring(21,$user.Length - 22)
-    #echo $user
+    Write-Host "User: " $user
 
     # Getting audit data    
     $logData = Search-UnifiedAuditLog -StartDate $startDate -EndDate $endDate -UserIds $user -Formatted | select AuditData
@@ -63,9 +64,9 @@ foreach ($user in $users) {
     # Converting to json
     $jsonLogData = ConvertTo-Json $logData
 
-    # Adding to log file
+    # Adding to file
     Add-Content -Path $logFile -Value $jsonLogData
 
-    # Increasing counter
+    # Increasing counter to progress meter
     $counter += 1
 }
