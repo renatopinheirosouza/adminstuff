@@ -1,6 +1,6 @@
-﻿<#
+<#
 .Purpose
-    Office 365 audit logs collect
+     Collect Office 365 audit logs
 
 .INPUTS
     startDate: Audit log initial date
@@ -8,12 +8,12 @@
     logFile: Audit log file path
     loginAccount: Office 365 login account
 
-.EXEMPLO DE UTILIZAÇÃO
+.Utilization Samples
     .\auditlog.ps1 -startDate 11/01/2020 -endDate 11/30/2020 -logfile teste.log -loginaccount adm.renato.pinheiro@bridgeconsulting.com.br
 
-Autor          : Renato Souza (renato.pinheiro@bridgeconsulting.com.br)
-Versão         : v0.1
-Date da versão : 23/12/2020
+Author		: Renato Souza (renato.pinheiro@bridgeconsulting.com.br)
+Version : v0.1
+Date	: 23/12/2020
 #>
 
 param(
